@@ -132,7 +132,13 @@ Results:
 NOTE: Your answer should match the settings in `SimulatedSensors.txt`, where you can also grab the simulated noise parameters for all the other sensors.
 
 
-### Step 2: Attitude Estimation ###
+
+## Step 2: Attitude Estimation
+
+
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/34095574/114270004-4c933b80-9a0a-11eb-943f-4d113d993aed.gif " alt="animated" />
+</p>
 
 Now let's look at the first step to our state estimation: including information from our IMU.  In this step, you will be improving the complementary filter-type attitude filter with a better rate gyro attitude integration scheme.
 
