@@ -89,7 +89,7 @@ For the controls project, the simulator was working with a perfect set of sensor
 
 5. Run the simulator. If your values are correct, the dashed lines in the simulation will eventually turn green, indicating you’re capturing approx 68% of the respective measurements (which is what we expect within +/- 1 sigma bound for a Gaussian noise model)
 
-An easy way to determine the standard deviation from the simulation generated logs Graph1.txt and Graph2.txt is by using the function  std_GPS_ACC() below:
+An easy way to determine the standard deviation from the simulation generated logs Graph1.txt and Graph2.txt is by using the function  `std_GPS_ACC()` below:
 
 ```python
 
@@ -107,7 +107,13 @@ def std_GPS_ACC():
 
 ```
 
+Results:
 
+```python
+GPS X Standard Deviation (MeasuredStdDev_GPSPosXY): 0.7143802427990665
+ACC X Standard Deviation (MeasuredStdDev_AccelXY): 0.48949949063436704
+
+```
 
 
 
