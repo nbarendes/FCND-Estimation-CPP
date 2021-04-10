@@ -232,17 +232,18 @@ MatrixXf QuadEstimatorEKF::GetRbgPrime(float roll, float pitch, float yaw)
   return RbgPrime;
 }
 ````
-Prediction can be break down into two parts: state mean and state covariance.
 
 
-<img src="img/Predict_step.png" alt="animated" />
 
-
-A state transition function is defined as following:
+Jacobian Matrix is defined as following:
 
 <img src="img/jacobian.png" alt="animated" />
 
 
+Prediction can be break down into two parts: state mean and state covariance.
+
+
+<img src="img/Predict_step.png" alt="animated" />
 
 
 
@@ -313,21 +314,12 @@ The predict state covariance forward  as shown in the figure below:
 
 
 
-5. Run your covariance prediction and tune the `QPosXYStd` and the `QVelXYStd` process parameters in `QuadEstimatorEKF.txt` to try to capture the magnitude of the error you see. Note that as error grows our simplified model will not capture the real error dynamics (for example, specifically, coming from attitude errors), therefore  try to make it look reasonable only for a relatively short prediction period (the scenario is set for one second).  A good solution looks as follows:
+5. Run the covariance prediction and tune the `QPosXYStd` and the `QVelXYStd` process parameters in `QuadEstimatorEKF.txt` to try to capture the magnitude of the error . Note that as error grows our simplified model will not capture the real error dynamics (for example, specifically, coming from attitude errors), therefore  try to make it look reasonable only for a relatively short prediction period (the scenario is set for one second). 
 
-![good covariance](images/predict-good-cov.png)
-
-Looking at this result, you can see that in the first part of the plot, our covariance (the white line) grows very much like the data.
-
-If we look at an example with a `QPosXYStd` that is much too high (shown below), we can see that the covariance no longer grows in the same way as the data.
-
-![bad x covariance](images/bad-x-sigma.PNG)
-
-Another set of bad examples is shown below for having a `QVelXYStd` too large (first) and too small (second).  As you can see, once again, our covariances in these cases no longer model the data well.
-
-![bad vx cov large](images/bad-vx-sigma.PNG)
-
-![bad vx cov small](images/bad-vx-sigma-low.PNG)
+`
+QPosXYStd = .05
+QVelXYStd = .18
+`
 
 ***Success criteria:***
 `
