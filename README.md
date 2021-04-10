@@ -312,7 +312,8 @@ void QuadEstimatorEKF::Predict(float dt, V3F accel, V3F gyro)
 
 ```
 QPosXYStd = .05
-QVel``XYStd = .18
+QVelXYStd = .18
+
 ```
 
 The predict state covariance forward  as shown in the figure below:
@@ -324,6 +325,7 @@ The predict state covariance forward  as shown in the figure below:
 
 
 ***Success criteria:***
+
 `
 *This step doesn't have any specific measurable criteria being checked.*
 `
