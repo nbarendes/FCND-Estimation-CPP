@@ -178,7 +178,7 @@ In this next step you will be implementing the prediction step of your filter.
 You will notice however that the estimated covariance (white bounds) currently do not capture the growing errors.
 
 4. In `QuadEstimatorEKF.cpp`
-  - We define `GetRbgPrime()` the transition function in terms of the derivative rotation matrix R'bg which rotates from the body frame to the global frame. 
+  - We define `GetRbgPrime()`  the partial derivative of the Rbg matrix. 
   - we calculate the partial derivative of the body-to-global rotation matrix(`Jacobian Matrix`) by using the function `GetRbgPrime()`.  
   - We implement the rest of the prediction step (predict the state covariance forward) in `Predict()`.
 
@@ -246,6 +246,45 @@ Predict step:
 Implementation in QuadEstimatorEKF.cpp:
 
 ```c++
+void QuadEstimatorEKF::Predict(float dt, V3F accel, V3F gyro)
+{
+  // predict the state forward
+  VectorXf newState = PredictState(ekfState, dt, accel, gyro);
+
+  // Predict the current covariance forward by dt using the current accelerations and body rates as input.
+  // INPUTS: 
+  //   dt: time step to predict forward by [s]
+  //   accel: acceleration of the vehicle, in body frame, *not including gravity* [m/s2]
+  //   gyro: body rates of the vehicle, in body frame [rad/s]
+  //   state (member variable): current state (state at the beginning of this prediction)
+  //   
+  // OUTPUT:
+  //   update the member variable cov to the predicted covariance
+
+  // HINTS
+  // - update the covariance matrix cov according to the EKF equation.
+  // 
+  // - you may find the current estimated attitude in variables rollEst, pitchEst, state(6).
+  //
+  // - use the class MatrixXf for matrices. To create a 3x5 matrix A, use MatrixXf A(3,5).
+  //
+  // - the transition model covariance, Q, is loaded up from a parameter file in member variable Q
+  // 
+  // - This is unfortunately a messy step. Try to split this up into clear, manageable steps:
+  //   1) Calculate the necessary helper matrices, building up the transition jacobian
+  //   2) Once all the matrices are there, write the equation to update cov.
+  //
+  // - if you want to transpose a matrix in-place, use A.transposeInPlace(), not A = A.transpose()
+  // 
+
+  // we'll want the partial derivative of the Rbg matrix
+  MatrixXf RbgPrime = GetRbgPrime(rollEst, pitchEst, ekfState(6));
+
+  // we've created an empty Jacobian for you, currently simply set to identity
+  MatrixXf gPrime(QUAD_EKF_NUM_STATES, QUAD_EKF_NUM_STATES);
+  gPrime.setIdentity();
+
+
   // From "Estimation for Quadrotors" paper ( Eq. 51 )
   gPrime(0,3) = dt;
   gPrime(1,4) = dt;
@@ -256,7 +295,11 @@ Implementation in QuadEstimatorEKF.cpp:
   gPrime(5, 6) = (RbgPrime(2) * accel).sum() * dt;
   
   // From "Estimation for Quadrotors" paper ( Section 3 ) 
-  ekfCov = gPrime * ekfCov * gPrime.transpose() + Q;
+  ekfCov = gPrime * ekfCov * gPrime.transpose() + Q; 
+
+
+  ekfState = newState;
+}
 ```
 
 The predict state covariance forward  as shown in the figure below:
