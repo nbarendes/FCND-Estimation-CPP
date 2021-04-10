@@ -177,7 +177,61 @@ In this next step you will be implementing the prediction step of your filter.
    - The bottom graph shows 10 (prediction-only) velocity estimates
 You will notice however that the estimated covariance (white bounds) currently do not capture the growing errors.
 
-4. In `QuadEstimatorEKF.cpp`, we calculate the partial derivative of the body-to-global rotation matrix(`Jacobian Matrix`) in the function `GetRbgPrime()`.  Once you have that function implement, implement the rest of the prediction step (predict the state covariance forward) in `Predict()`.
+4. In `QuadEstimatorEKF.cpp`
+  - We define `GetRbgPrime()` the transition function in terms of the derivative rotation matrix R'bg which rotates from the body frame to the global frame. 
+  - we calculate the partial derivative of the body-to-global rotation matrix(`Jacobian Matrix`) by using the function `GetRbgPrime()`.  
+  - We implement the rest of the prediction step (predict the state covariance forward) in `Predict()`.
+
+Rbg_Prime equation:
+
+<img src="img/rbg_prime.png" alt="animated" />
+
+Implementation of `GetRbgPrime()` :
+
+```c++
+
+MatrixXf QuadEstimatorEKF::GetRbgPrime(float roll, float pitch, float yaw)
+{
+  // first, figure out the Rbg_prime
+  MatrixXf RbgPrime(3, 3);
+  RbgPrime.setZero();
+
+  // Return the partial derivative of the Rbg rotation matrix with respect to yaw. We call this RbgPrime.
+  // INPUTS: 
+  //   roll, pitch, yaw: Euler angles at which to calculate RbgPrime
+  //   
+  // OUTPUT:
+  //   return the 3x3 matrix representing the partial derivative at the given point
+
+  // HINTS
+  // - this is just a matter of putting the right sin() and cos() functions in the right place.
+  //   make sure you write clear code and triple-check your math
+  // - You can also do some numerical partial derivatives in a unit test scheme to check 
+  //   that your calculations are reasonable
+
+  
+  // From "Estimation for Quadrotors" paper ( Eq. 52 )
+  float theta = pitch;
+  float phi = roll ;
+  float psi = yaw ;
+
+  RbgPrime(0,0) = (- ( cos(theta) * sin(psi) ) );
+  RbgPrime(0,1) = (- ( sin(phi) * sin(theta) * sin(psi) ) - ( cos(phi) * cos(psi) ) );
+  RbgPrime(0,2) = (- ( cos(phi) * sin(theta) * sin(psi) ) + ( sin(phi) * cos(psi) ) );
+
+  RbgPrime(1,0) = ( cos(theta) * cos(psi) ) ;
+  RbgPrime(1,1) = ( sin(phi) * sin(theta) * cos(psi) ) - ( cos(phi) * sin(psi) );
+  RbgPrime(1,2) = ( cos(phi) * sin(theta) * cos(psi) ) + ( sin(phi) * sin(psi) );
+
+  RbgPrime(2,0) = 0;
+  RbgPrime(2,1) = 0;
+  RbgPrime(2,2) = 0;
+
+
+
+  return RbgPrime;
+}
+````
 
 Jacobian Matrix equations:
 
