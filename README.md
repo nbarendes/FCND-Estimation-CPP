@@ -340,6 +340,11 @@ Up until now we've only used the accelerometer and gyro for our state estimation
 
 ![mag drift](images/mag-drift.png)
 
+The parameter value will be:
+ ` ` ` 
+QYawStd = .1
+ ` ` `
+ 
 3. Implement magnetometer update in the function `UpdateFromMag()`.  Once completed, you should see a resulting plot similar to this one:
 
 ![mag good](images/mag-good-solution.png)
