@@ -345,7 +345,7 @@ The parameter value will be:
 QYawStd = .1
  ` ` `
  
-3. Implement magnetometer update in the function `UpdateFromMag()`.  Once completed, you should see a resulting plot similar to this one:
+3. Implement magnetometer update in the function `UpdateFromMag()`.  Once completed, we should see a resulting plot similar to this one:
 
 ![mag good](images/mag-good-solution.png)
 
@@ -387,12 +387,16 @@ void QuadEstimatorEKF::UpdateFromMag(float magYaw)
 
 ```
 
+<p align="center">
+  <img src="img/MagUpdate.gif" alt="animated" />
+</p>
 
-***Success criteria:*** *Your goal is to both have an estimated standard deviation that accurately captures the error and maintain an error of less than 0.1rad in heading for at least 10 seconds of the simulation.*
+
+***Success criteria:*** *The goal is to both have an estimated standard deviation that accurately captures the error and maintain an error of less than 0.1rad in heading for at least 10 seconds of the simulation.*
 
 **Hint: after implementing the magnetometer update, you may have to once again tune the parameter `QYawStd` to better balance between the long term drift and short-time noise from the magnetometer.**
 
-**Hint: see section 7.3.2 of [Estimation for Quadrotors](https://www.overleaf.com/read/vymfngphcccj) for a refresher on the magnetometer update.**
+
 
 
 ## Step 5: Closed Loop + GPS Update 
