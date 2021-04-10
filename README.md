@@ -387,6 +387,8 @@ void QuadEstimatorEKF::UpdateFromMag(float magYaw)
 
 ```
 
+The result of the magnitude update is  shown in the figure below:
+
 <p align="center">
   <img src="img/MagUpdate.gif" alt="animated" />
 </p>
