@@ -179,7 +179,31 @@ You will notice however that the estimated covariance (white bounds) currently d
 
 4. In `QuadEstimatorEKF.cpp`, we calculate the partial derivative of the body-to-global rotation matrix(`Jacobian Matrix`) in the function `GetRbgPrime()`.  Once you have that function implement, implement the rest of the prediction step (predict the state covariance forward) in `Predict()`.
 
+Jacobian Matrix equations:
+
 <img src="img/jacobian.png" alt="animated" />
+
+
+Predict step:
+
+<img src="img/Predict_step.png" alt="animated" />
+
+
+Implementation in QuadEstimatorEKF.cpp:
+
+```c++
+  // From "Estimation for Quadrotors" paper ( Eq. 51 )
+  gPrime(0,3) = dt;
+  gPrime(1,4) = dt;
+  gPrime(2,5) = dt;
+  
+  gPrime(3, 6) = (RbgPrime(0) * accel).sum() * dt;
+  gPrime(4, 6) = (RbgPrime(1) * accel).sum() * dt;
+  gPrime(5, 6) = (RbgPrime(2) * accel).sum() * dt;
+  
+  // From "Estimation for Quadrotors" paper ( Section 3 ) 
+  ekfCov = gPrime * ekfCov * gPrime.transpose() + Q;
+```
 
 The predict state covariance forward  as shown in the figure below:
 
@@ -187,11 +211,7 @@ The predict state covariance forward  as shown in the figure below:
   <img src="img/PredictCovariance.gif" alt="animated" />
 </p>
 
-**Hint: see section 7.2 of [Estimation for Quadrotors](https://www.overleaf.com/read/vymfngphcccj) for a refresher on the the transition model and the partial derivatives you may need**
 
-**Hint: When it comes to writing the function for GetRbgPrime, make sure to triple check you've set all the correct parts of the matrix.**
-
-**Hint: recall that the control input is the acceleration!**
 
 5. Run your covariance prediction and tune the `QPosXYStd` and the `QVelXYStd` process parameters in `QuadEstimatorEKF.txt` to try to capture the magnitude of the error you see. Note that as error grows our simplified model will not capture the real error dynamics (for example, specifically, coming from attitude errors), therefore  try to make it look reasonable only for a relatively short prediction period (the scenario is set for one second).  A good solution looks as follows:
 
@@ -209,8 +229,10 @@ Another set of bad examples is shown below for having a `QVelXYStd` too large (f
 
 ![bad vx cov small](images/bad-vx-sigma-low.PNG)
 
-***Success criteria:*** *This step doesn't have any specific measurable criteria being checked.*
-
+***Success criteria:***
+`
+*This step doesn't have any specific measurable criteria being checked.*
+`
 
 ## Step 4: Magnetometer Update 
 
