@@ -423,6 +423,47 @@ The result of the magnitude update is  shown in the figure below:
 
 5. Implement the EKF GPS Update in the function `UpdateFromGPS()`.
 
+```c++
+void QuadEstimatorEKF::UpdateFromGPS(V3F pos, V3F vel)
+{
+  VectorXf z(6), zFromX(6);
+  z(0) = pos.x;
+  z(1) = pos.y;
+  z(2) = pos.z;
+  z(3) = vel.x;
+  z(4) = vel.y;
+  z(5) = vel.z;
+
+  MatrixXf hPrime(6, QUAD_EKF_NUM_STATES);
+  hPrime.setZero();
+
+  // GPS UPDATE
+  // Hints: 
+  //  - The GPS measurement covariance is available in member variable R_GPS
+  //  - this is a very simple update
+  
+  // From "Estimation for Quadrotors" paper (  Eq. 53 & Eq. 54  )
+  zFromX(0) = ekfState(0);
+  zFromX(1) = ekfState(1);
+  zFromX(2) = ekfState(2);
+  zFromX(3) = ekfState(3);
+  zFromX(4) = ekfState(4);
+  zFromX(5) = ekfState(5);
+
+  // From "Estimation for Quadrotors" paper ( Eq. 55 )
+  hPrime(0, 0) = 1;
+  hPrime(1, 1) = 1;
+  hPrime(2, 2) = 1;
+  hPrime(3, 3) = 1;
+  hPrime(4, 4) = 1;
+  hPrime(5, 5) = 1;
+
+
+  Update(z, hPrime, R_GPS, zFromX);
+}
+
+```
+
 6. Now once again re-run the simulation.  Your objective is to complete the entire simulation cycle with estimated position error of < 1m (you’ll see a green box over the bottom graph if you succeed).  You may want to try experimenting with the GPS update parameters to try and get better performance.
 
 ***Success criteria:*** *Your objective is to complete the entire simulation cycle with estimated position error of < 1m.*
