@@ -179,6 +179,12 @@ You will notice however that the estimated covariance (white bounds) currently d
 
 4. In `QuadEstimatorEKF.cpp`, calculate the partial derivative of the body-to-global rotation matrix in the function `GetRbgPrime()`.  Once you have that function implement, implement the rest of the prediction step (predict the state covariance forward) in `Predict()`.
 
+The predict state covariance forward  as shown in the figure below:
+
+<p align="center">
+  <img src="img/PredictCovariance.gif" alt="animated" />
+</p>
+
 **Hint: see section 7.2 of [Estimation for Quadrotors](https://www.overleaf.com/read/vymfngphcccj) for a refresher on the the transition model and the partial derivatives you may need**
 
 **Hint: When it comes to writing the function for GetRbgPrime, make sure to triple check you've set all the correct parts of the matrix.**
