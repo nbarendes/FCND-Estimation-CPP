@@ -160,10 +160,6 @@ In the screenshot above the attitude estimation using linear scheme (left) and u
 
 ## Step 3: Prediction Step 
 
-<p align="center">
-  <img src="img/Prediction Step.gif" alt="animated" />
-</p>
-
 
 In this next step you will be implementing the prediction step of your filter.
 
@@ -171,8 +167,10 @@ In this next step you will be implementing the prediction step of your filter.
 1. Run scenario `08_PredictState`.  This scenario is configured to use a perfect IMU (only an IMU). Due to the sensitivity of double-integration to attitude errors, we've made the accelerometer update very insignificant (`QuadEstimatorEKF.attitudeTau = 100`).  The plots on this simulation show element of your estimated state and that of the true state.  At the moment you should see that your estimated state does not follow the true state.
 
 2. In `QuadEstimatorEKF.cpp`, implement the state prediction step in the `PredictState()` functon. If you do it correctly, when you run scenario `08_PredictState` you should see the estimator state track the actual state, with only reasonably slow drift, as shown in the figure below:
-
-![predict drift](images/predict-slow-drift.png)
+3. 
+<p align="center">
+  <img src="img/Prediction Step.gif" alt="animated" />
+</p>
 
 3. Now let's introduce a realistic IMU, one with noise.  Run scenario `09_PredictionCov`. You will see a small fleet of quadcopter all using your prediction code to integrate forward. You will see two plots:
    - The top graph shows 10 (prediction-only) position X estimates
