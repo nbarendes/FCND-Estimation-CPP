@@ -306,6 +306,15 @@ void QuadEstimatorEKF::Predict(float dt, V3F accel, V3F gyro)
 }
 ```
 
+
+
+5. Run the covariance prediction and tune the `QPosXYStd` and the `QVelXYStd` process parameters in `QuadEstimatorEKF.txt` to try to capture the magnitude of the error . Note that as error grows our simplified model will not capture the real error dynamics (for example, specifically, coming from attitude errors), therefore  try to make it look reasonable only for a relatively short prediction period (the scenario is set for one second). 
+
+```
+QPosXYStd = .05
+QVel``XYStd = .18
+```
+
 The predict state covariance forward  as shown in the figure below:
 
 <p align="center">
@@ -313,13 +322,6 @@ The predict state covariance forward  as shown in the figure below:
 </p>
 
 
-
-5. Run the covariance prediction and tune the `QPosXYStd` and the `QVelXYStd` process parameters in `QuadEstimatorEKF.txt` to try to capture the magnitude of the error . Note that as error grows our simplified model will not capture the real error dynamics (for example, specifically, coming from attitude errors), therefore  try to make it look reasonable only for a relatively short prediction period (the scenario is set for one second). 
-
-`
-QPosXYStd = .05
-QVelXYStd = .18
-`
 
 ***Success criteria:***
 `
