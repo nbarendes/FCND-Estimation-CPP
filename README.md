@@ -137,7 +137,7 @@ NOTE: Your answer should match the settings in `SimulatedSensors.txt`, where you
 
 
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/34095574/114270004-4c933b80-9a0a-11eb-943f-4d113d993aed.gif " alt="animated" />
+  <img src="https://user-images.githubusercontent.com/34095574/114270482-eb209c00-9a0c-11eb-914f-f74dd0107a0a.gif" alt="animated" />
 </p>
 
 Now let's look at the first step to our state estimation: including information from our IMU.  In this step, you will be improving the complementary filter-type attitude filter with a better rate gyro attitude integration scheme.
