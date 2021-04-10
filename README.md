@@ -75,7 +75,7 @@ Project outline:
 
 
 
-### Step 1: Sensor Noise ###
+## Step 1: Sensor Noise 
 
 
 
