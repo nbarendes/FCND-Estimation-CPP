@@ -75,7 +75,16 @@ Project outline:
 
 
 
-### Step 1: Sensor Noise ###
+## Step 1: Sensor Noise 
+
+
+
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/34095574/114270004-4c933b80-9a0a-11eb-943f-4d113d993aed.gif " alt="animated" />
+</p>
+
+
+ 
 
 For the controls project, the simulator was working with a perfect set of sensors, meaning none of the sensors had any noise.  The first step to adding additional realism to the problem, and developing an estimator, is adding noise to the quad's sensors.  For the first step, you will collect some simulated noisy sensor data and estimate the standard deviation of the quad's sensor.
 
@@ -89,12 +98,47 @@ For the controls project, the simulator was working with a perfect set of sensor
 
 5. Run the simulator. If your values are correct, the dashed lines in the simulation will eventually turn green, indicating you’re capturing approx 68% of the respective measurements (which is what we expect within +/- 1 sigma bound for a Gaussian noise model)
 
+An easy way to determine the standard deviation from the simulation generated logs Graph1.txt and Graph2.txt is by using the function  `std_GPS_ACC()` below:
+
+```python
+
+import numpy as np
+
+def std_GPS_ACC():
+  gps_x_val = np.loadtxt('/content/sample_data/GPS_X.txt',delimiter=',',dtype='Float64',skiprows=1)[:,1]
+  gps_x_std  = np.std(gps_x_val)
+  print("GPS X Standard Deviation (MeasuredStdDev_GPSPosXY):",gps_x_std)
+
+  acc_x_val = np.loadtxt('/content/sample_data/ACC_X.txt',delimiter=',',dtype='Float64',skiprows=1)[:,1]
+  acc_x_std  = np.std(acc_x_val)
+  print("ACC X Standard Deviation (MeasuredStdDev_AccelXY):",acc_x_std)
+  
+
+```
+
+The values for MeasuredStdDev_GPSPosXY and MeasuredStdDev_AccelXY are:
+
+```python
+GPS X Standard Deviation (MeasuredStdDev_GPSPosXY): 0.7143802427990665
+ACC X Standard Deviation (MeasuredStdDev_AccelXY): 0.48949949063436704
+
+```
+
+Results:
+
+
 ***Success criteria:*** *Your standard deviations should accurately capture the value of approximately 68% of the respective measurements.*
 
 NOTE: Your answer should match the settings in `SimulatedSensors.txt`, where you can also grab the simulated noise parameters for all the other sensors.
 
 
-### Step 2: Attitude Estimation ###
+
+## Step 2: Attitude Estimation
+
+
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/34095574/114270482-eb209c00-9a0c-11eb-914f-f74dd0107a0a.gif" alt="animated" />
+</p>
 
 Now let's look at the first step to our state estimation: including information from our IMU.  In this step, you will be improving the complementary filter-type attitude filter with a better rate gyro attitude integration scheme.
 
