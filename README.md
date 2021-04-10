@@ -1,38 +1,38 @@
-# Estimation Project #
+yo# Estimation Project #
 
-Welcome to the estimation project.  In this project, you will be developing the estimation portion of the controller used in the CPP simulator.  By the end of the project, your simulated quad will be flying with your estimator and your custom controller (from the previous project)!
+Welcome to the estimation project.  In this project, we will be developing the estimation portion of the controller used in the CPP simulator.  By the end of the project, our simulated quad will be flying with our estimator and your custom controller (from the previous project)!
 
 This README is broken down into the following sections:
 
  - [Setup](#setup) - the environment and code setup required to get started and a brief overview of the project structure
- - [The Tasks](#the-tasks) - the tasks you will need to complete for the project
- - [Tips and Tricks](#tips-and-tricks) - some additional tips and tricks you may find useful along the way
- - [Submission](#submission) - overview of the requirements for your project submission
+ - [The Tasks](#the-tasks) - the tasks we will need to complete for the project
+ - [Tips and Tricks](#tips-and-tricks) - some additional tips and tricks we may find useful along the way
+ - [Submission](#submission) - overview of the requirements for our project submission
 
 
 ## Setup ##
 
-This project will continue to use the C++ development environment you set up in the Controls C++ project.
+This project will continue to use the C++ development environment we set up in the Controls C++ project.
 
  1. Clone the repository
  ```
  git clone https://github.com/udacity/FCND-Estimation-CPP.git
  ```
 
- 2. Import the code into your IDE like done in the [Controls C++ project](https://github.com/udacity/FCND-Controls-CPP#development-environment-setup)
+ 2. Import the code into our IDE like done in the [Controls C++ project](https://github.com/udacity/FCND-Controls-CPP#development-environment-setup)
  
- 3. You should now be able to compile and run the estimation simulator just as you did in the controls project
+ 3. We should now be able to compile and run the estimation simulator just as we did in the controls project
 
 
 ### Project Structure ###
 
-For this project, you will be interacting with a few more files than before.
+For this project, we will be interacting with a few more files than before.
 
- - The EKF is already partially implemented for you in `QuadEstimatorEKF.cpp`
+ - The EKF is already partially implemented for we in `QuadEstimatorEKF.cpp`
 
  - Parameters for tuning the EKF are in the parameter file `QuadEstimatorEKF.txt`
 
- - When you turn on various sensors (the scenarios configure them, e.g. `Quad.Sensors += SimIMU, SimMag, SimGPS`), additional sensor plots will become available to see what the simulated sensors measure.
+ - When we turn on various sensors (the scenarios configure them, e.g. `Quad.Sensors += SimIMU, SimMag, SimGPS`), additional sensor plots will become available to see what the simulated sensors measure.
 
  - The EKF implementation exposes both the estimated state and a number of additional variables. In particular:
 
@@ -40,12 +40,12 @@ For this project, you will be interacting with a few more files than before.
 
    - `Quad.Est.S.X` is the estimated standard deviation of the X state (that is, the square root of the appropriate diagonal variable in the covariance matrix). More generally, the variables in `<vehicle>.Est.S.*` are standard deviations calculated from the estimator state covariance matrix.
 
-   - `Quad.Est.D` contains miscellaneous additional debug variables useful in diagnosing the filter. You may or might not find these useful but they were helpful to us in verifying the filter and may give you some ideas if you hit a block.
+   - `Quad.Est.D` contains miscellaneous additional debug variables useful in diagnosing the filter. We may or might not find these useful but they were helpful to us in verifying the filter and may give us some ideas if we hit a block.
 
 
 #### `config` Directory ####
 
-In the `config` directory, in addition to finding the configuration files for your controller and your estimator, you will also see configuration files for each of the simulations.  For this project, you will be working with simulations 06 through 11 and you may find it insightful to take a look at the configuration for the simulation.
+In the `config` directory, in addition to finding the configuration files for our controller and our estimator, we will also see configuration files for each of the simulations.  For this project, we will be working with simulations 06 through 11 and we may find it insightful to take a look at the configuration for the simulation.
 
 As an example, if we look through the configuration file for scenario 07, we see the following parameters controlling the sensor:
 
@@ -57,12 +57,12 @@ SimIMU.AccelStd = 0,0,0
 SimIMU.GyroStd = 0,0,0
 ```
 
-This configuration tells us that the simulator is only using an IMU and the sensor data will have no noise.  You will notice that for each simulator these parameters will change slightly as additional sensors are being used and the noise behavior of the sensors change.
+This configuration tells us that the simulator is only using an IMU and the sensor data will have no noise.  We will notice that for each simulator these parameters will change slightly as additional sensors are being used and the noise behavior of the sensors change.
 
 
 ## The Tasks ##
 
-Once again, you will be building up your estimator in pieces.  At each step, there will be a set of success criteria that will be displayed both in the plots and in the terminal output to help you along the way.
+Once again, we will be building up our estimator in pieces.  At each step, there will be a set of success criteria that will be displayed both in the plots and in the terminal output to help us along the way.
 
 Project outline:
 
@@ -86,17 +86,17 @@ Project outline:
 
  
 
-For the controls project, the simulator was working with a perfect set of sensors, meaning none of the sensors had any noise.  The first step to adding additional realism to the problem, and developing an estimator, is adding noise to the quad's sensors.  For the first step, you will collect some simulated noisy sensor data and estimate the standard deviation of the quad's sensor.
+For the controls project, the simulator was working with a perfect set of sensors, meaning none of the sensors had any noise.  The first step to adding additional realism to the problem, and developing an estimator, is adding noise to the quad's sensors.  For the first step, we will collect some simulated noisy sensor data and estimate the standard deviation of the quad's sensor.
 
-1. Run the simulator in the same way as you have before
+1. Run the simulator in the same way as we have before
 
-2. Choose scenario `06_NoisySensors`.  In this simulation, the interest is to record some sensor data on a static quad, so you will not see the quad move.  You will see two plots at the bottom, one for GPS X position and one for The accelerometer's x measurement.  The dashed lines are a visualization of a single standard deviation from 0 for each signal. The standard deviations are initially set to arbitrary values (after processing the data in the next step, you will be adjusting these values).  If they were set correctly, we should see ~68% of the measurement points fall into the +/- 1 sigma bound.  When you run this scenario, the graphs you see will be recorded to the following csv files with headers: `config/log/Graph1.txt` (GPS X data) and `config/log/Graph2.txt` (Accelerometer X data).
+2. Choose scenario `06_NoisySensors`.  In this simulation, the interest is to record some sensor data on a static quad, so we will not see the quad move.  We will see two plots at the bottom, one for GPS X position and one for The accelerometer's x measurement.  The dashed lines are a visualization of a single standard deviation from 0 for each signal. The standard deviations are initially set to arbitrary values (after processing the data in the next step, we will be adjusting these values).  If they were set correctly, we should see ~68% of the measurement points fall into the +/- 1 sigma bound.  When we run this scenario, the graphs we see will be recorded to the following csv files with headers: `config/log/Graph1.txt` (GPS X data) and `config/log/Graph2.txt` (Accelerometer X data).
 
 3. Process the logged files to figure out the standard deviation of the the GPS X signal and the IMU Accelerometer X signal.
 
-4. Plug in your result into the top of `config/6_Sensornoise.txt`.  Specially, set the values for `MeasuredStdDev_GPSPosXY` and `MeasuredStdDev_AccelXY` to be the values you have calculated.
+4. Plug in our result into the top of `config/6_Sensornoise.txt`.  Specially, set the values for `MeasuredStdDev_GPSPosXY` and `MeasuredStdDev_AccelXY` to be the values we have calculated.
 
-5. Run the simulator. If your values are correct, the dashed lines in the simulation will eventually turn green, indicating you’re capturing approx 68% of the respective measurements (which is what we expect within +/- 1 sigma bound for a Gaussian noise model)
+5. Run the simulator. If our values are correct, the dashed lines in the simulation will eventually turn green, indicating we’re capturing approx 68% of the respective measurements (which is what we expect within +/- 1 sigma bound for a Gaussian noise model)
 
 An easy way to determine the standard deviation from the simulation generated logs Graph1.txt and Graph2.txt is by using the function  `std_GPS_ACC()` below:
 
@@ -127,9 +127,9 @@ ACC X Standard Deviation (MeasuredStdDev_AccelXY): 0.48949949063436704
 Results:
 
 
-***Success criteria:*** *Your standard deviations should accurately capture the value of approximately 68% of the respective measurements.*
+***Success criteria:*** *our standard deviations should accurately capture the value of approximately 68% of the respective measurements.*
 
-NOTE: Your answer should match the settings in `SimulatedSensors.txt`, where you can also grab the simulated noise parameters for all the other sensors.
+NOTE: Our answer should match the settings in `SimulatedSensors.txt`, where we can also grab the simulated noise parameters for all the other sensors.
 
 
 
@@ -140,7 +140,7 @@ NOTE: Your answer should match the settings in `SimulatedSensors.txt`, where you
   <img src="https://user-images.githubusercontent.com/34095574/114270482-eb209c00-9a0c-11eb-914f-f74dd0107a0a.gif" alt="animated" />
 </p>
 
-Now let's look at the first step to our state estimation: including information from our IMU.  In this step, you will be improving the complementary filter-type attitude filter with a better rate gyro attitude integration scheme.
+Now let's look at the first step to our state estimation: including information from our IMU.  In this step, we will be improving the complementary filter-type attitude filter with a better rate gyro attitude integration scheme.
 
 1. Run scenario `07_AttitudeEstimation`.  For this simulation, the only sensor used is the IMU and noise levels are set to 0 (see `config/07_AttitudeEstimation.txt` for all the settings for this simulation).  There are two plots visible in this simulation.
    - The top graph is showing errors in each of the estimated Euler angles.
