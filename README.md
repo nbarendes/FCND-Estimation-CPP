@@ -232,15 +232,18 @@ MatrixXf QuadEstimatorEKF::GetRbgPrime(float roll, float pitch, float yaw)
   return RbgPrime;
 }
 ````
+Prediction can be break down into two parts: state mean and state covariance.
 
-Jacobian Matrix equations:
+
+<img src="img/Predict_step.png" alt="animated" />
+
+
+A state transition function is defined as following:
 
 <img src="img/jacobian.png" alt="animated" />
 
 
-Predict step:
 
-<img src="img/Predict_step.png" alt="animated" />
 
 
 Implementation in QuadEstimatorEKF.cpp:
