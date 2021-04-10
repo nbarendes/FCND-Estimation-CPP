@@ -344,6 +344,45 @@ Up until now we've only used the accelerometer and gyro for our state estimation
 
 ![mag good](images/mag-good-solution.png)
 
+Code of function `UpdateFromMag()`:
+
+```c++
+void QuadEstimatorEKF::UpdateFromMag(float magYaw)
+{
+  VectorXf z(1), zFromX(1);
+  z(0) = magYaw;
+
+  MatrixXf hPrime(1, QUAD_EKF_NUM_STATES);
+  hPrime.setZero();
+
+  // MAGNETOMETER UPDATE
+  // Hints: 
+  //  - Your current estimated yaw can be found in the state vector: ekfState(6)
+  //  - Make sure to normalize the difference between your measured and estimated yaw
+  //    (you don't want to update your yaw the long way around the circle)
+  //  - The magnetomer measurement covariance is available in member variable R_Mag
+
+  
+  hPrime(6) = 1; // hPrime= [ 0 0 0 0 0 1]
+
+  zFromX(0) = ekfState(6);
+
+  //normalize the difference between your measured and estimated yaw
+  float diff = z(0) - zFromX(0);
+  if ( diff > F_PI ) {
+    zFromX(0) += 2.f*F_PI;
+  } else if ( diff < -F_PI ) {
+    zFromX(0) -= 2.f*F_PI;
+  }
+  
+
+
+  Update(z, hPrime, R_Mag, zFromX);
+}
+
+```
+
+
 ***Success criteria:*** *Your goal is to both have an estimated standard deviation that accurately captures the error and maintain an error of less than 0.1rad in heading for at least 10 seconds of the simulation.*
 
 **Hint: after implementing the magnetometer update, you may have to once again tune the parameter `QYawStd` to better balance between the long term drift and short-time noise from the magnetometer.**
