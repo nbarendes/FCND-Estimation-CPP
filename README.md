@@ -177,7 +177,9 @@ In this next step you will be implementing the prediction step of your filter.
    - The bottom graph shows 10 (prediction-only) velocity estimates
 You will notice however that the estimated covariance (white bounds) currently do not capture the growing errors.
 
-4. In `QuadEstimatorEKF.cpp`, calculate the partial derivative of the body-to-global rotation matrix in the function `GetRbgPrime()`.  Once you have that function implement, implement the rest of the prediction step (predict the state covariance forward) in `Predict()`.
+4. In `QuadEstimatorEKF.cpp`, we calculate the partial derivative of the body-to-global rotation matrix(`Jacobian Matrix`) in the function `GetRbgPrime()`.  Once you have that function implement, implement the rest of the prediction step (predict the state covariance forward) in `Predict()`.
+
+<img src="img/jacobian.png" alt="animated" />
 
 The predict state covariance forward  as shown in the figure below:
 
