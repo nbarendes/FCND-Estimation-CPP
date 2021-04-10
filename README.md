@@ -247,7 +247,7 @@ Prediction can be break down into two parts: state mean and state covariance.
 
 
 
-Implementation in QuadEstimatorEKF.cpp:
+Implementation of Predict function in QuadEstimatorEKF.cpp:
 
 ```c++
 void QuadEstimatorEKF::Predict(float dt, V3F accel, V3F gyro)
