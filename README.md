@@ -466,6 +466,14 @@ void QuadEstimatorEKF::UpdateFromGPS(V3F pos, V3F vel)
 
 6. Now once again re-run the simulation.  Your objective is to complete the entire simulation cycle with estimated position error of < 1m (you’ll see a green box over the bottom graph if you succeed).  You may want to try experimenting with the GPS update parameters to try and get better performance.
 
+The result of the Closed Loop + GPS Update is shown in the figure below:
+
+<p align="center">
+  <img src="img/GpsUpdate.gif" alt="animated" />
+</p>
+
+
+
 ***Success criteria:*** *Your objective is to complete the entire simulation cycle with estimated position error of < 1m.*
 
 **Hint: see section 7.3.1 of [Estimation for Quadrotors](https://www.overleaf.com/read/vymfngphcccj) for a refresher on the GPS update.**
