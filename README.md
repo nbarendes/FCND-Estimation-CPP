@@ -107,7 +107,7 @@ def std_GPS_ACC():
 
 ```
 
-Results:
+The values for MeasuredStdDev_GPSPosXY and MeasuredStdDev_AccelXY are:
 
 ```python
 GPS X Standard Deviation (MeasuredStdDev_GPSPosXY): 0.7143802427990665
@@ -115,7 +115,7 @@ ACC X Standard Deviation (MeasuredStdDev_AccelXY): 0.48949949063436704
 
 ```
 
-
+Results:
 
 
 ***Success criteria:*** *Your standard deviations should accurately capture the value of approximately 68% of the respective measurements.*
