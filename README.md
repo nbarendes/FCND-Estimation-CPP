@@ -346,15 +346,16 @@ Up until now we've only used the accelerometer and gyro for our state estimation
 2. Tune the parameter `QYawStd` (`QuadEstimatorEKF.txt`) for the QuadEstimatorEKF so that it approximately captures the magnitude of the drift, as demonstrated here:
 
 ![mag drift](images/mag-drift.png)
+![mag good](images/mag-good-solution.png)
 
 The parameter value will be:
- ` ` ` 
+ ```
 QYawStd = .1
- ` ` `
+ ```
  
 3. Implement magnetometer update in the function `UpdateFromMag()`.  
 
-![mag good](images/mag-good-solution.png)
+
 
 Code of function `UpdateFromMag()`:
 
