@@ -487,7 +487,11 @@ Up to this point, we have been working with a controller that has been relaxed t
 
 **Hint: we may find it easiest to do our de-tuning as a 2 step process by reverting to ideal sensors and de-tuning under those conditions first.**
 
+Result:
+
 ***Success criteria:*** *Our objective is to complete the entire simulation cycle with estimated position error of < 1m.*
+
+<img src="img/Adding our Controller.jpg"/>
 
 
 
