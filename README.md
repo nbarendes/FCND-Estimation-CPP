@@ -477,6 +477,11 @@ Result:
 
 ### Step 6: Adding our Controller ###
 
+<p align="center">
+  <img src="img/Adding our Controller.gif" alt="animated" />
+</p>
+
+
 Up to this point, we have been working with a controller that has been relaxed to work with an estimated state instead of a real state.  So now, we will see how well our controller performs and de-tune our controller accordingly.
 
 1. Replace `QuadController.cpp` with the controller we wrote in the last project.
