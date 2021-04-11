@@ -159,6 +159,84 @@ Observe that there’s quite a bit of error in attitude estimation.
 
 In the screenshot above the attitude estimation using linear scheme (left) and using the improved nonlinear scheme (right). Note that Y axis on error is much greater on left.
 
+Implementation of `UpdateFromIMU()` :
+
+```c++
+void QuadEstimatorEKF::UpdateFromIMU(V3F accel, V3F gyro)
+{
+  // Improve a complementary filter-type attitude filter
+  // 
+  // Currently a small-angle approximation integration method is implemented
+  // The integrated (predicted) value is then updated in a complementary filter style with attitude information from accelerometers
+  // 
+  // Implement a better integration method that uses the current attitude estimate (rollEst, pitchEst and ekfState(6))
+  // to integrate the body rates into new Euler angles.
+  //
+  // HINTS:
+  //  - there are several ways to go about this, including:
+  //    1) create a rotation matrix based on your current Euler angles, integrate that, convert back to Euler angles
+  //    OR 
+  //    2) use the Quaternion<float> class, which has a handy FromEuler123_RPY function for creating a quaternion from Euler Roll/PitchYaw
+  //       (Quaternion<float> also has a IntegrateBodyRate function, though this uses quaternions, not Euler angles)
+
+
+  // SMALL ANGLE GYRO INTEGRATION:
+  // (replace the code below)
+  // make sure you comment it out when you add your own code -- otherwise e.g. you might integrate yaw twice
+
+  //float predictedPitch = pitchEst + dtIMU * gyro.y;
+  //float predictedRoll = rollEst + dtIMU * gyro.x;
+  //ekfState(6) = ekfState(6) + dtIMU * gyro.z;	// yaw
+    
+  float phi = rollEst;
+  float theta = pitchEst;
+
+  // Rotatin Matrix ( from 3D Drone Exercise - Part 3)
+  Mat3x3F R = Mat3x3F();
+  R(0,0) = 1; 
+  R(0,1) = sin(phi) * tan(theta); 
+  R(0,2) = cos(phi) * tan(theta);
+  R(1,0) = 0; 
+  R(1,1) = cos(phi); 
+  R(1,2) = -sin(phi);
+  R(2,0) = 0; 
+  R(2,1) = sin(phi) / cos(theta);  // sec(theta) = 1 / cos(theta)
+  R(2,2) = cos(phi) / cos(theta);  // sec(theta) = 1 / cos(theta)
+  
+  V3F euler_dot = R * gyro ;
+  
+  // Predict
+  float predictedPitch = pitchEst + dtIMU * euler_dot.y;
+  float predictedRoll = rollEst + dtIMU * euler_dot.x;
+  ekfState(6) = ekfState(6) + dtIMU * euler_dot.z;	// yaw
+  
+  // normalize yaw to -pi .. pi
+  if (ekfState(6) > F_PI) ekfState(6) -= 2.f*F_PI;
+  if (ekfState(6) < -F_PI) ekfState(6) += 2.f*F_PI;
+
+
+
+  // CALCULATE UPDATE
+  accelRoll = atan2f(accel.y, accel.z);
+  accelPitch = atan2f(-accel.x, 9.81f);
+
+  // FUSE INTEGRATION AND UPDATE
+  rollEst = attitudeTau / (attitudeTau + dtIMU) * (predictedRoll)+dtIMU / (attitudeTau + dtIMU) * accelRoll;
+  pitchEst = attitudeTau / (attitudeTau + dtIMU) * (predictedPitch)+dtIMU / (attitudeTau + dtIMU) * accelPitch;
+
+  lastGyro = gyro;
+}
+
+
+
+
+
+```
+
+
+
+
+
 Results:
 
 ***Success criteria:*** *Our attitude estimator needs to get within 0.1 rad for each of the Euler angles for at least 3 seconds.*
@@ -476,6 +554,11 @@ Result:
 
 
 ### Step 6: Adding our Controller ###
+
+<p align="center">
+  <img src="img/Adding our Controller.gif" alt="animated" />
+</p>
+
 
 Up to this point, we have been working with a controller that has been relaxed to work with an estimated state instead of a real state.  So now, we will see how well our controller performs and de-tune our controller accordingly.
 
