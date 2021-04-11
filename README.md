@@ -129,6 +129,12 @@ Results:
 
 ***Success criteria:*** *our standard deviations should accurately capture the value of approximately 68% of the respective measurements.*
 
+
+<img src="img/Simulated_sensor.jpg"/>
+
+
+
+
 NOTE: Our answer should match the settings in `SimulatedSensors.txt`, where we can also grab the simulated noise parameters for all the other sensors.
 
 
