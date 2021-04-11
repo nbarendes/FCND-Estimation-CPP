@@ -414,6 +414,10 @@ Result:
 
 5. Implement the EKF GPS Update in the function `UpdateFromGPS()`.
 
+In this step,  GPS update is implemented into estimator. by the help of the equations `Section 7.3.1 ` from [`Estimation for Quadrotors`](https://www.overleaf.com/read/vymfngphcccj#/54894644/) paper [5] , implementation is achieved.
+
+<img src="img/Closed_Loop+GPS Update.png"/>
+
 ```c++
 void QuadEstimatorEKF::UpdateFromGPS(V3F pos, V3F vel)
 {
