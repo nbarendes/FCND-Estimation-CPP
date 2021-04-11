@@ -470,9 +470,6 @@ Result:
 
 <img src="img/GpsUpdate.jpg"/>
 
-**Hint: see section 7.3.1 of [Estimation for Quadrotors](https://www.overleaf.com/read/vymfngphcccj) for a refresher on the GPS update.**
-
-At this point, congratulations on having a working estimator!
 
 ### Step 6: Adding our Controller ###
 
