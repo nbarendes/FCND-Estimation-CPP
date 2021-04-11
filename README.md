@@ -1,4 +1,4 @@
-yo# Estimation Project #
+4th Project - Building an Estimator #
 
 Welcome to the estimation project.  In this project, we will be developing the estimation portion of the controller used in the CPP simulator.  By the end of the project, our simulated quad will be flying with our estimator and our custom controller (from the previous project)!
 
