@@ -464,8 +464,11 @@ The result of the Closed Loop + GPS Update is shown in the figure below:
 </p>
 
 
+Result:
 
 ***Success criteria:*** *our objective is to complete the entire simulation cycle with estimated position error of < 1m.*
+
+<img src="img/GpsUpdate.jpg"/>
 
 **Hint: see section 7.3.1 of [Estimation for Quadrotors](https://www.overleaf.com/read/vymfngphcccj) for a refresher on the GPS update.**
 
