@@ -318,6 +318,7 @@ QVelXYStd = .18
 
 The predict state covariance forward  as shown in the figure below:
 
+
 <p align="center">
   <img src="img/PredictCovariance.gif" alt="animated" />
 </p>
