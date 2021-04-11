@@ -7,8 +7,7 @@ This README is broken down into the following sections:
 
  - [Setup](#setup) - the environment and code setup required to get started and a brief overview of the project structure
  - [The Tasks](#the-tasks) - the tasks we will need to complete for the project
- - [Tips and Tricks](#tips-and-tricks) - some additional tips and tricks we may find useful along the way
- - [Submission](#submission) - overview of the requirements for our project submission
+
 
 
 ## Setup ##
