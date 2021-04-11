@@ -472,26 +472,4 @@ Up to this point, we have been working with a controller that has been relaxed t
 ***Success criteria:*** *Our objective is to complete the entire simulation cycle with estimated position error of < 1m.*
 
 
-## Tips and Tricks ##
 
- - When it comes to transposing matrices, `.transposeInPlace()` is the function we want to use to transpose a matrix
-
- - The [Estimation for Quadrotors](https://www.overleaf.com/read/vymfngphcccj) document contains a helpful mathematical breakdown of the core elements on our estimator
-
-## Submission ##
-
-For this project, we will need to submit:
-
- - a completed estimator that meets the performance criteria for each of the steps by submitting:
-   - `QuadEstimatorEKF.cpp`
-   - `config/QuadEstimatorEKF.txt`
-
- - a re-tuned controller that, in conjunction with our tuned estimator, is capable of meeting the criteria laid out in Step 6 by submitting:
-   - `QuadController.cpp`
-   - `config/QuadControlParams.txt`
-
- - a write up addressing all the points of the rubric
-
-## Authors ##
-
-Thanks to Fotokite for the initial development of the project code and simulator.
