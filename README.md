@@ -351,7 +351,7 @@ The parameter value will be:
 QYawStd = .1
  ` ` `
  
-3. Implement magnetometer update in the function `UpdateFromMag()`.  Once completed, we should see a resulting plot similar to this one:
+3. Implement magnetometer update in the function `UpdateFromMag()`.  
 
 ![mag good](images/mag-good-solution.png)
 
