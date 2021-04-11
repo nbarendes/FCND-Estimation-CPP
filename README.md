@@ -159,6 +159,14 @@ Observe that there’s quite a bit of error in attitude estimation.
 
 In the screenshot above the attitude estimation using linear scheme (left) and using the improved nonlinear scheme (right). Note that Y axis on error is much greater on left.
 
+In this setup , the complementary filter-type attitude filter is improved by integrating body rate p,q,r which obtained from rate gyro into the estimated pitch and roll angle.
+By using this equation[3], an instantaneous change in the Euler angles (world frame) is obtained from turn rate in the body frame.
+
+
+<p align="center">
+  <img src="img/equation[3].png"/>
+</p>
+
 Implementation of `UpdateFromIMU()` :
 
 ```c++
