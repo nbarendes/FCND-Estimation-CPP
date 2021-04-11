@@ -261,21 +261,6 @@ void QuadEstimatorEKF::Predict(float dt, V3F accel, V3F gyro)
   // OUTPUT:
   //   update the member variable cov to the predicted covariance
 
-  // HINTS
-  // - update the covariance matrix cov according to the EKF equation.
-  // 
-  // - you may find the current estimated attitude in variables rollEst, pitchEst, state(6).
-  //
-  // - use the class MatrixXf for matrices. To create a 3x5 matrix A, use MatrixXf A(3,5).
-  //
-  // - the transition model covariance, Q, is loaded up from a parameter file in member variable Q
-  // 
-  // - This is unfortunately a messy step. Try to split this up into clear, manageable steps:
-  //   1) Calculate the necessary helper matrices, building up the transition jacobian
-  //   2) Once all the matrices are there, write the equation to update cov.
-  //
-  // - if you want to transpose a matrix in-place, use A.transposeInPlace(), not A = A.transpose()
-  // 
 
   // we'll want the partial derivative of the Rbg matrix
   MatrixXf RbgPrime = GetRbgPrime(rollEst, pitchEst, ekfState(6));
@@ -365,12 +350,6 @@ void QuadEstimatorEKF::UpdateFromMag(float magYaw)
   hPrime.setZero();
 
   // MAGNETOMETER UPDATE
-  // Hints: 
-  //  - Your current estimated yaw can be found in the state vector: ekfState(6)
-  //  - Make sure to normalize the difference between your measured and estimated yaw
-  //    (you don't want to update your yaw the long way around the circle)
-  //  - The magnetomer measurement covariance is available in member variable R_Mag
-
   
   hPrime(6) = 1; // hPrime= [ 0 0 0 0 0 1]
 
@@ -438,7 +417,7 @@ void QuadEstimatorEKF::UpdateFromGPS(V3F pos, V3F vel)
   // GPS UPDATE
   // Hints: 
   //  - The GPS measurement covariance is available in member variable R_GPS
-  //  - this is a very simple update
+  
   
   // From "Estimation for Quadrotors" paper (  Eq. 53 & Eq. 54  )
   zFromX(0) = ekfState(0);
