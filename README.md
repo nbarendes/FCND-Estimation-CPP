@@ -387,7 +387,11 @@ The result of the magnitude update is  shown in the figure below:
 </p>
 
 
+Result:
+
 ***Success criteria:*** *The goal is to both have an estimated standard deviation that accurately captures the error and maintain an error of less than 0.1rad in heading for at least 10 seconds of the simulation.*
+
+<img src="img/MagUpdate.jpg"/>
 
 **Hint: after implementing the magnetometer update, we may have to once again tune the parameter `QYawStd` to better balance between the long term drift and short-time noise from the magnetometer.**
 
